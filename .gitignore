@@ -1,2 +1,18 @@
-/mongo-volume
 .env
+node_modules
+node_modules/
+**node_modules
+
+# misc
+.DS_Store
+npm-debug.log
+.idea
+.vscode/
+*.log
+coverage
+.env*
+!.env.example
+yarn-error.log
+*.csv
+#development db
+mongo-volume
