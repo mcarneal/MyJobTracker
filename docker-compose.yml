@@ -1,0 +1,30 @@
+version : '3'
+services :
+  server:
+    build: server/.
+    env_file:
+      - server/.env
+    container_name: 'myJobTracker-Server'
+    command: 'yarn start'
+    ports:
+      - '8808:8808'
+    volumes:
+      - './server/:/root/myJobTracker/server:cached'
+    depends_on:
+      - mongoDB
+    links:
+      - mongoDB
+  mongoDB:
+    image: 'mongo'
+    container_name: 'mongo_container'
+    env_file:
+      - .env
+    volumes:
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./mongo-volume:/data/db
+    ports:
+      - '27017-27019:27017-27019'
+
+
+
+

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+mongo <<EOF
+use $MONGO_INITDB_DATABASE
+db.createUser(
+    {
+        user : '$MONGO_INITDB_ROOT_USERNAME',
+        pwd :  '$MONGO_INITDB_ROOT_PASSWORD',
+        roles : [
+            {
+                role : 'readWrite',
+                db : '$MONGO_INITDB_DATABASE'
+            }
+        ]
+    }
+)
+use $MONGO_INITDB_APP_DATABASE
+db.createUser(
+    {
+        user : '$MONGO_INITDB_ROOT_USERNAME',
+        pwd :  '$MONGO_INITDB_ROOT_PASSWORD',
+        roles : [
+            {
+                role : 'readWrite',
+                db : '$MONGO_INITDB_APP_DATABASE'
+            }
+        ]
+    }
+)
+
+EOF
