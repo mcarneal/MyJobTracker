@@ -15,6 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import { ResponsiveDrawerProps } from "./types"
 
 const drawerWidth = 240;
 
@@ -53,11 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface Props {
-    children: React.ReactNode;
-    window?: () => Window;
-}
-const ResponsiveDrawer: FunctionComponent<Props> = (props) => {
+const ResponsiveDrawer: FunctionComponent<ResponsiveDrawerProps> = (props)  => {
     const { window } = props;
     const classes = useStyles();
     const theme = useTheme();
