@@ -1,5 +1,17 @@
 version : '3'
 services :
+  client:
+    build: client/.
+    env_file:
+      - client/.env
+    container_name: 'myJobTracker-Client'
+    command: 'yarn start'
+    stdin_open: true
+    ports:
+      - '5000:5000'
+      - '3000:3000'
+    volumes:
+      - './client/:/root/myJobTracker/client:cached'
   server:
     build: server/.
     env_file:
