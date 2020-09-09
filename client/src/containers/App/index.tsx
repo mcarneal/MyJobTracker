@@ -7,33 +7,30 @@
  *
  */
 
-import React, {FunctionComponent, useEffect} from 'react';
+import React, {FunctionComponent, lazy, Suspense} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { useInjectReducer, } from '../../utils/injectReducer'
+import reducer from "../../components/ResponsiveDrawer"
 import { IApp } from "./types";
-import reducer from './reducer'
+// import reducer from './reducer'
 import {sendMessage} from "./actions";
-import  ResponsiveDrawer  from '../../components/ResponsiveDrawer'
+// import  ResponsiveDrawer  from '../../components/ResponsiveDrawer'
 
 // import { Switch, Route } from 'react-router-dom';
 
-const App: FunctionComponent<IApp> = ({title}) =>  {
-    useInjectReducer({
-        key: `forecast`,
-        reducer,
-    })
-    const dispatch = useDispatch()
-    const selector = useSelector( state => state)
+const ResponsiveDrawer = lazy(async ()=> {
+    return  await import(`../../components/ResponsiveDrawer`)
+})
 
-    const clickHandle = () =>{
-        dispatch(sendMessage({name: 'Morgan', age: 27}))
-    }
+const App = () =>  {
 
     return (
      <div>
-        <ResponsiveDrawer>
-            <h1>hi</h1>
-        </ResponsiveDrawer>
+         <Suspense fallback={<div>Loading</div>}>
+            <ResponsiveDrawer>
+                <h1>hi</h1>
+            </ResponsiveDrawer>
+         </Suspense>
        {/*<Switch>*/}
        {/*  <Route exact path="/" component={HomePage} />*/}
        {/*  <Route component={NotFoundPage} />*/}

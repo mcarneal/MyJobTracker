@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent, memo, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -16,7 +16,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import { ResponsiveDrawerProps } from "./types"
-
+import {connect, useDispatch, useSelector} from "react-redux";
+import fetchFromApi from "./apiHook"
+import * as selectors  from "./selectors"
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -54,16 +58,24 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const ResponsiveDrawer: FunctionComponent<ResponsiveDrawerProps> = (props)  => {
-    const { window } = props;
+const ResponsiveDrawer = ({
+    children,
+    window,
+    items,
+}: ResponsiveDrawerProps)  => {
+
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+
+
+    const [test] = fetchFromApi(items)
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    console.log(`here it is`)
 
     const drawer = (
         <div>
@@ -143,9 +155,25 @@ const ResponsiveDrawer: FunctionComponent<ResponsiveDrawerProps> = (props)  => {
             </nav>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                {props.children}
+                { children }
             </main>
         </div>
     );
 }
-export default ResponsiveDrawer
+
+
+
+const mapStateToProps = createStructuredSelector({
+    // @ts-ignore
+    items: selectors.makeForecastRows(),
+
+})
+
+const withConnect = connect(
+    mapStateToProps,
+)
+
+export default compose(
+    withConnect,
+)(ResponsiveDrawer)
+

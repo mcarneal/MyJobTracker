@@ -16,4 +16,4 @@ ENV LOGGING_LEVEL debug
 
 EXPOSE 8808
 
-CMD yarn start:docker
+CMD yarn start
