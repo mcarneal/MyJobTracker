@@ -1,10 +1,11 @@
-import axios from "axios"
+import MasterDataApiController from "../../api/Master-Data";
 import {
     FETCH_FAILED,
     FETCH_SUCCESS
 } from "./constants"
-
-import MasterDataApiController from "../../api/Master-Data";
+import {
+    Item,
+} from "./types";
 
 export const fetchItems = () => {
     return async (dispatch: any)  => {
@@ -22,12 +23,13 @@ export const fetchItems = () => {
     };
 };
 
-export const getDataSuccess = (payload: any) => ({
+
+export const getDataSuccess = (payload: Item) => ({
     type: FETCH_SUCCESS,
     payload
 });
 
- const getDataFailure = (payload: any) => ({
+ const getDataFailure = (payload: Item) => ({
     type: FETCH_FAILED,
      payload
 });

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, memo, useEffect} from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -15,13 +15,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
-import { ResponsiveDrawerProps } from "./types"
+import { ResponsiveDrawerProps, SelectorType } from "./types"
 import { connect } from "react-redux";
-import {FetchFromApi, useStyles } from "./apiHook"
+import {FetchFromApi, useStyles } from "./hooks"
 import * as selectors  from "./selectors"
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import selectViewsDomain from "./selectors"
+import ListItems from "../ListItem"
 
 const ResponsiveDrawer = ({
     children,
@@ -36,24 +36,21 @@ const ResponsiveDrawer = ({
     const classes = useStyles();
     const theme = useTheme();
 
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-    const drawer = (
+    const drawer = items && isFetching ? (
         <div>
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {items && isFetching ? items.map((item: {name: string, index: number}) => {
+                {items.map((item: {name: string, index: number}) => {
                     return (
-                        <ListItem button key={item.name}>
-                            <ListItemIcon>{item.index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={item.name} />
-                        </ListItem>
+                        <ListItems key={item.index} name={item.name} index={item.index} />
                     )
-                }): null}
+                })}
             </List>
             <Divider />
             <List>
@@ -65,7 +62,7 @@ const ResponsiveDrawer = ({
                 ))}
             </List>
         </div>
-    );
+    ) : null;
 
     const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -127,9 +124,7 @@ const ResponsiveDrawer = ({
     );
 }
 
-export type ItemCount = ReturnType<typeof selectViewsDomain>;
-
-const mapStateToProps = createStructuredSelector<ResponsiveDrawerProps, ItemCount>({
+const mapStateToProps = createStructuredSelector<ResponsiveDrawerProps, SelectorType>({
     items: selectors.makeViewIcons(),
     isFetching: selectors.makeIsFetching()
 });

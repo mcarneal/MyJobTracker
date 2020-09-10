@@ -49,7 +49,44 @@ const createNavigationBarItem = (req, res) => __awaiter(void 0, void 0, void 0, 
         winston_1.W.info(`successfully retrieved navigation bar items`);
         res.status(SUCCESS).json({
             result: {
-                count: 4,
+                queryTime: queryTimer_1.default.processFinished(),
+                data: newNavigationBarItem,
+            },
+        });
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(e.status).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
+const updateNavigationBarItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        queryTimer_1.default.processStarted();
+        const { body, } = req;
+        const newNavigationBarItem = yield masterData_1.default.updateNavigationBarItem(body);
+        res.status(SUCCESS).json({
+            result: {
+                queryTime: queryTimer_1.default.processFinished(),
+                data: newNavigationBarItem,
+            },
+        });
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(e.status).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
+const deleteNavigationBarItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        queryTimer_1.default.processStarted();
+        const { body, } = req;
+        const newNavigationBarItem = yield masterData_1.default.deleteNavigationBarItem(body);
+        res.status(SUCCESS).json({
+            result: {
                 queryTime: queryTimer_1.default.processFinished(),
                 data: newNavigationBarItem,
             },
@@ -65,4 +102,6 @@ const createNavigationBarItem = (req, res) => __awaiter(void 0, void 0, void 0, 
 exports.default = {
     fetchAllNavigationBarItems,
     createNavigationBarItem,
+    updateNavigationBarItem,
+    deleteNavigationBarItem,
 };

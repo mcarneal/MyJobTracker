@@ -3,12 +3,12 @@ import {
     FETCH_FAILED,
 } from './constants'
 import {
-    ItemComponent,
+    Item,
     CollectItemAction,
 } from "./types";
 
 
-export const initialState: ItemComponent = {
+export const initialState: Item = {
     isFetching: false,
     items: [],
 }

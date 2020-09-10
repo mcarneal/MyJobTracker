@@ -12,4 +12,10 @@ module.exports = (api) => {
     api.post(`/${RESOURCE}/navigation-items`, [
     //todo: plug middleware in here
     ], functions_1.default.createNavigationBarItem);
+    api.patch(`/${RESOURCE}/navigation-items`, [
+    //todo: plug middleware in here
+    ], functions_1.default.updateNavigationBarItem);
+    api.delete(`/${RESOURCE}/navigation-items`, [
+    //todo: plug middleware in here
+    ], functions_1.default.deleteNavigationBarItem);
 };

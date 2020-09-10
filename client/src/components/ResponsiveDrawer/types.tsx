@@ -1,4 +1,5 @@
 import React from "react";
+import selectViewsDomain from "./selectors";
 
 export interface ResponsiveDrawerProps {
     children?: React.ReactNode;
@@ -7,22 +8,14 @@ export interface ResponsiveDrawerProps {
     isFetching?: boolean
 }
 
-export interface PayloadItem {
-    id: string
-    index: number
-    name: string
-    __v: number
-}
-
-export interface PayloadItems extends Array<PayloadItem>{}
-
-export interface ItemComponent {
+export interface Item {
     isFetching?: boolean
     items?: any,
 }
 
 export interface CollectItemAction {
     type: string
-    payload: ItemComponent
+    payload: Item
 }
 
+export type SelectorType = ReturnType<typeof selectViewsDomain>;

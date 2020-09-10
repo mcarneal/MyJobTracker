@@ -1,18 +1,18 @@
 import { createSelector, } from 'reselect'
 import { initialState, } from './reducers'
-import { ItemComponent} from "./types";
+import { Item } from "./types";
 
-const selectViewsDomain = (state: ItemComponent) => state.items || initialState
+const selectViewsDomain = (state: Item ) => state.items || initialState
 
 const makeViewIcons = () =>
     createSelector(
         selectViewsDomain,
-        substate => substate.items,
+        subState => subState.items,
     )
 const makeIsFetching = () =>
     createSelector(
         selectViewsDomain,
-        substate => substate.isFetching,
+        subState => subState.isFetching,
     )
 
 export default selectViewsDomain
