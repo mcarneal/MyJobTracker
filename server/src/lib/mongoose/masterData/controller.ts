@@ -9,7 +9,6 @@ interface CreateNavigationItem {
     index: number,
 }
 class MasterDataDataBaseController {
-
     public static async fetchAllNavigationBarItems() {
         try {
             return await ItemComponent.find()
@@ -17,7 +16,6 @@ class MasterDataDataBaseController {
             W.error(`Error occurred while fetching all navigation bar items`)
         }
     }
-
     public static async createNavigationBarItem({
         name,
         index,

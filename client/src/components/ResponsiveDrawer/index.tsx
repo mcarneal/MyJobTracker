@@ -14,80 +14,46 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import { ResponsiveDrawerProps } from "./types"
-import {connect, useDispatch, useSelector} from "react-redux";
-import fetchFromApi from "./apiHook"
+import { connect } from "react-redux";
+import {FetchFromApi, useStyles } from "./apiHook"
 import * as selectors  from "./selectors"
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: 'flex',
-        },
-        drawer: {
-            [theme.breakpoints.up('sm')]: {
-                width: drawerWidth,
-                flexShrink: 0,
-            },
-        },
-        appBar: {
-            [theme.breakpoints.up('sm')]: {
-                width: `calc(100% - ${drawerWidth}px)`,
-                marginLeft: drawerWidth,
-            },
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-            [theme.breakpoints.up('sm')]: {
-                display: 'none',
-            },
-        },
-        // necessary for content to be below app bar
-        toolbar: theme.mixins.toolbar,
-        drawerPaper: {
-            width: drawerWidth,
-        },
-        content: {
-            flexGrow: 1,
-            padding: theme.spacing(3),
-        },
-    }),
-);
+import selectViewsDomain from "./selectors"
 
 const ResponsiveDrawer = ({
     children,
     window,
+    isFetching,
     items,
 }: ResponsiveDrawerProps)  => {
 
+    FetchFromApi({
+        isFetching
+    })
     const classes = useStyles();
     const theme = useTheme();
+
     const [mobileOpen, setMobileOpen] = React.useState(false);
-
-
-    const [test] = fetchFromApi(items)
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
-    console.log(`here it is`)
-
     const drawer = (
         <div>
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                {items && isFetching ? items.map((item: {name: string, index: number}) => {
+                    return (
+                        <ListItem button key={item.name}>
+                            <ListItemIcon>{item.index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={item.name} />
+                        </ListItem>
+                    )
+                }): null}
             </List>
             <Divider />
             <List>
@@ -161,13 +127,12 @@ const ResponsiveDrawer = ({
     );
 }
 
+export type ItemCount = ReturnType<typeof selectViewsDomain>;
 
-
-const mapStateToProps = createStructuredSelector({
-    // @ts-ignore
-    items: selectors.makeForecastRows(),
-
-})
+const mapStateToProps = createStructuredSelector<ResponsiveDrawerProps, ItemCount>({
+    items: selectors.makeViewIcons(),
+    isFetching: selectors.makeIsFetching()
+});
 
 const withConnect = connect(
     mapStateToProps,
