@@ -2,6 +2,7 @@ import express from 'express'
 const api = express.Router()
 
 const routes = [
+    `auth`,
     `users`,
     `masterData`,
 ]

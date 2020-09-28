@@ -3,14 +3,12 @@ import {
     Router,
 } from 'express';
 const RESOURCE = `master-data`
-const ACCOUNT_PREFIX = `:accountId`
-// const BASE_PATH = `/${ACCOUNT_PREFIX}/${RESOURCE}`
 
+const passport = require("passport")
 
 export = (api: Router) => {
 
     api.get(`/${RESOURCE}/navigation-items`,[
-        //todo: plug middleware in here
     ] ,functions.fetchAllNavigationBarItems)
 
     api.post(`/${RESOURCE}/navigation-items`,[
@@ -24,5 +22,4 @@ export = (api: Router) => {
     api.delete(`/${RESOURCE}/navigation-items`,[
         //todo: plug middleware in here
     ] ,functions.deleteNavigationBarItem)
-
 }

@@ -6,10 +6,22 @@ const {
 
 const schema = {
     id: Schema.Types.ObjectId,
-    userName: {
+    displayName: {
         type: String,
         required: true,
     },
+    googleId: {
+        type: String,
+        required: false,
+    },
+    accessToken: {
+        type: String,
+        required: false,
+    },
+    refreshToken: {
+        type: String,
+        required: false,
+    }
 }
 
 const UserSchema = new Schema(schema)

@@ -17,19 +17,16 @@ const winston_1 = require("../../lib/winston");
 const queryTimer_1 = __importDefault(require("../../lib/helpers/queryTimer"));
 const model_1 = __importDefault(require("../../lib/mongoose/users/model"));
 const SUCCESS = 200;
-const fetchAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const fetchAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         queryTimer_1.default.processStarted();
-        const user = new model_1.default({
-            userName: `megan`,
-        });
-        yield user.save();
-        winston_1.W.info(`successfully created new user ${user}`);
+        const allUsers = yield model_1.default.find();
+        let count = allUsers.length;
         res.status(SUCCESS).json({
             result: {
-                count: 1,
+                count,
                 queryTime: queryTimer_1.default.processFinished(),
-                data: user,
+                data: allUsers,
             },
         });
     }

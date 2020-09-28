@@ -7,24 +7,20 @@ import User from '../../lib/mongoose/users/model'
 import {
     Request,
     Response,
-    NextFunction,
 } from 'express';
 
 const SUCCESS = 200
 
-const fetchAllUsers = async (req: Request, res: Response, next : NextFunction) => {
+const fetchAllUsers = async (req: Request, res: Response) => {
     try {
         queryTimer.processStarted()
-        const user = new User({
-            userName: `megan`,
-        })
-        await user.save()
-        W.info(`successfully created new user ${user}`)
+        const allUsers = await User.find()
+        let count = allUsers.length
         res.status(SUCCESS).json({
             result: {
-                count: 1,
+                count,
                 queryTime: queryTimer.processFinished(),
-                data: user,
+                data: allUsers,
             },
         })
     }
