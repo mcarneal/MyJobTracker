@@ -91,8 +91,8 @@ export = (api: Router) => {
                 });
                 client.refreshAccessToken( async (err, token) => {
                     if (token) {
-                        let accessToken = token.access_token
-                        let refreshToken = token.refresh_token
+                        const accessToken = token.access_token
+                        const refreshToken = token.refresh_token
                         const currentUser = await User.findOne({
                             googleId: user.googleId
                         })

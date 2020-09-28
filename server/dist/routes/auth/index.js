@@ -80,8 +80,8 @@ module.exports = (api) => {
                 });
                 client.refreshAccessToken((err, token) => __awaiter(void 0, void 0, void 0, function* () {
                     if (token) {
-                        let accessToken = token.access_token;
-                        let refreshToken = token.refresh_token;
+                        const accessToken = token.access_token;
+                        const refreshToken = token.refresh_token;
                         const currentUser = yield model_1.default.findOne({
                             googleId: user.googleId
                         });
