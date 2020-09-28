@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const api = express_1.default.Router();
 const routes = [
+    `auth`,
     `users`,
     `masterData`,
 ];
