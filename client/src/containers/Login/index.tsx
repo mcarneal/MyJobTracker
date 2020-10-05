@@ -1,8 +1,11 @@
-import React, {useEffect, FunctionComponent} from 'react';
-import { useSelector } from "react-redux";
+import React, { ComponentType, FunctionComponent } from 'react';
+import { connect } from "react-redux";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form'
+import { formValueSelector, Field, reduxForm, InjectedFormProps } from 'redux-form'
 import TextFieldInput from "../../components/TextField";
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { LoginProps } from "./types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,12 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Login: FunctionComponent<InjectedFormProps> = ({ handleSubmit, pristine, reset, submitting }) => {
+const Login: FunctionComponent<LoginProps & InjectedFormProps<{}, LoginProps>> = ({handleSubmit, email, password}) => {
     const classes = useStyles();
-    const selector = useSelector(state => state)
     const submit = (e: any) => {
         console.log(e)
-        console.log(selector)
+        console.log(email, password)
     }
     return(
         <form
@@ -29,7 +31,7 @@ const Login: FunctionComponent<InjectedFormProps> = ({ handleSubmit, pristine, r
         >
             <div>
                 <Field
-                    name="Email"
+                    name="email"
                     id="outlined-basic"
                     placeholder="Email Address"
                     variant="outlined"
@@ -38,7 +40,7 @@ const Login: FunctionComponent<InjectedFormProps> = ({ handleSubmit, pristine, r
             </div>
             <div>
                 <Field
-                    name="Password"
+                    name="password"
                     id="standard-password-input"
                     placeholder="Password"
                     type="password"
@@ -54,6 +56,23 @@ const Login: FunctionComponent<InjectedFormProps> = ({ handleSubmit, pristine, r
         </form>
     )
 }
-export default reduxForm({
-    form: "LoginForm"
-})(Login)
+
+const selector = formValueSelector('LoginForm');
+const mapStateToProps = createStructuredSelector({
+    email: (state: any) => selector(state, 'email'),
+    password: (state: any) => selector(state, 'password')
+});
+
+const withConnect = connect(
+    mapStateToProps,
+)
+
+export default compose<ComponentType>(
+    reduxForm({
+        destroyOnUnmount: false,
+        enableReinitialize: true,
+        keepDirtyOnReinitialize: true,
+        form: 'LoginForm'
+    }),
+    withConnect
+)(Login);
