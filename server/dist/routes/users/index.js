@@ -7,4 +7,6 @@ const RESOURCE = `users`;
 const ACCOUNT_PREFIX = `:accountId`;
 module.exports = (api) => {
     api.get(`/${RESOURCE}/`, functions_1.default.fetchAllUsers);
+    api.post(`/${RESOURCE}`, functions_1.default.createUser);
+    api.delete(`/${RESOURCE}`, functions_1.default.deleteUser);
 };

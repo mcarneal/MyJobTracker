@@ -2,16 +2,11 @@ import ItemComponent from "./model"
 import {
     W,
 } from "../../winston"
+import {
+    NavigationItem,
+    DeleteNavigationItemParams,
+} from "./types";
 
-interface NavigationItem {
-    name: string,
-    index: number,
-    id?: string,
-}
-
-interface DeleteNavigationItemParams {
-    id: string,
-}
 class MasterDataDataBaseController {
     public static async fetchAllNavigationBarItems() {
         try {

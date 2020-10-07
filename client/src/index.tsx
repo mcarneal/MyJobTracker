@@ -6,7 +6,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import history from './utils/history';
 import 'sanitize.css/sanitize.css';
 import App from './containers/App';
-import Login from './containers/Login'
 
 
 import configureStore from './configureStore';
@@ -18,8 +17,7 @@ ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <ConnectedRouter history={history}>
-                {/*<App />*/}
-                <Login />
+                <App />
             </ConnectedRouter>
         </Provider>
     </React.StrictMode>,

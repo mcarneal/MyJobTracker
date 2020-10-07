@@ -13,8 +13,8 @@ import history from './utils/history';
  */
 export default function createReducer(injectedReducers = {}) {
     return combineReducers({
-        form: formReducer,
-        router: connectRouter(history),
         ...injectedReducers,
+        router: connectRouter(history),
+        form: formReducer,
     });
 }
