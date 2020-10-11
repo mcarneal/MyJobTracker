@@ -11,7 +11,7 @@ const Home = lazy(async ()=> {
 })
 
 const App = () =>  {
-
+    console.log(`iam inside the app component`)
     return (
      <div>
          <Suspense fallback={<div>Loading</div>}>
