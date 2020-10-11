@@ -18,7 +18,6 @@ export const FetchFromApi = ({
         key: "items",
         reducer,
     })
-
     useEffect(() => {
         if (!isFetching) {
             dispatch(fetchItems())

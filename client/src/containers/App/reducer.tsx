@@ -1,8 +1,3 @@
-/*
- *
- * Forecast reducer
- *
- */
 import {
     ADD_FORECAST,
 } from './constants'

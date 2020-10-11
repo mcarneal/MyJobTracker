@@ -9,4 +9,6 @@ const ACCOUNT_PREFIX = `:accountId`
 
 export = (api: Router) => {
     api.get(`/${RESOURCE}/`, functions.fetchAllUsers)
+    api.post(`/${RESOURCE}`, functions.createUser)
+    api.delete(`/${RESOURCE}`, functions.deleteUser)
 }

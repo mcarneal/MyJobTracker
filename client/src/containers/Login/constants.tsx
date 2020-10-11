@@ -1,0 +1,1 @@
+export const USER_LOGIN_SUCCESS = `app/App/USER_LOGIN_SUCCESS`

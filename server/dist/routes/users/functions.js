@@ -16,6 +16,9 @@ const boom_1 = __importDefault(require("boom"));
 const winston_1 = require("../../lib/winston");
 const queryTimer_1 = __importDefault(require("../../lib/helpers/queryTimer"));
 const model_1 = __importDefault(require("../../lib/mongoose/users/model"));
+const users_1 = __importDefault(require("../../lib/mongoose/users"));
+const NO_RESULT_FOUND = 0;
+const RESULT_INDEX = 0;
 const SUCCESS = 200;
 const fetchAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -37,6 +40,61 @@ const fetchAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
 });
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        queryTimer_1.default.processStarted();
+        let count = NO_RESULT_FOUND;
+        const { body } = req;
+        if (body.displayName && body.password) {
+            const { displayName, password, } = body;
+            const user = yield users_1.default.createUser({
+                displayName,
+                password,
+            });
+            if (user)
+                count = user.length;
+            res.status(SUCCESS).json({
+                result: {
+                    count,
+                    queryTime: queryTimer_1.default.processFinished(),
+                    data: user[RESULT_INDEX],
+                }
+            });
+        }
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(e.status).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        queryTimer_1.default.processStarted();
+        const { body, } = req;
+        if (body.id) {
+            const { id } = body;
+            const deletedUser = yield users_1.default.deleteUser({
+                id,
+            });
+            res.status(SUCCESS).json({
+                result: {
+                    queryTime: queryTimer_1.default.processFinished(),
+                    data: deletedUser,
+                }
+            });
+        }
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(404).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
 exports.default = {
-    fetchAllUsers
+    fetchAllUsers,
+    createUser,
+    deleteUser,
 };
