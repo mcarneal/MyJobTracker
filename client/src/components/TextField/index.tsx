@@ -16,6 +16,8 @@ const TextFieldInput = ({
             placeholder={placeholder}
             variant={variant}
             type={type}
+            margin="normal"
+            fullWidth
             {...input}
             {...custom}
         />

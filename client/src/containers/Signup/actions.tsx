@@ -1,9 +1,9 @@
-// import MasterDataApiController from "../../api/Master-Data";
 import {
     CREATE_USER_SUCCESS
 } from "./constants"
 import {
     CreateUser,
+    SignupProps
 } from "./types";
 import { push } from "connected-react-router";
 import SignupUserController from "../../api/Signup";
@@ -11,7 +11,7 @@ import SignupUserController from "../../api/Signup";
 export const submitCreateUser = ({
     email,
     password,
-}: any) => {
+}: SignupProps) => {
     return async (dispatch: any)  => {
         try {
             await SignupUserController.createUser({
@@ -19,8 +19,9 @@ export const submitCreateUser = ({
                 password,
             })
              dispatch(createUserSuccess({
-                isLoading: false,
-                email,
+                 isLoading: false,
+                 email,
+                 isAuthenticated: true,
             }))
              dispatch(push(`/home`))
         } catch (e) {

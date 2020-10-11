@@ -12,17 +12,16 @@ export = (api: Router) => {
         accessType: 'offline',
     }));
     api.get("/auth/google/redirect",passport.authenticate("google"),(req: Request, res: Response) =>{
-        res.redirect("http://localhost:3000")
+        res.redirect("http://localhost:3000/home")
     });
     api.get("/auth/refresh", functions.handleGoogleRefreshToken)
     api.post("/auth/login", functions.handleLocalAuthentication);
 
-    // api.get("/logout", function(req, res) {
-    //     req.logout();
-    //     res.send(200, {
-    //         status: "OK"
-    //     });
-    // });
-
+    api.get("/logout", function(req, res) {
+        req.logout();
+        res.status(200).json({
+            loggedOut: true
+        })
+    });
 }
 

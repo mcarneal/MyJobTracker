@@ -1,21 +1,22 @@
 import {
-    CREATE_USER_SUCCESS,
+    USER_LOGIN_SUCCESS,
 } from './constants'
+
 import {
-    CreateUser,
-    CreateUserAction,
+    IUserLogin,
+    IUserLoginAction,
 } from "./types";
 
 
-export const initialState: CreateUser = {
+export const initialState: IUserLogin = {
+    isAuthenticated: false,
     isLoading: true,
     email: undefined,
-    isAuthenticated: false,
 }
 
-const reducer = (state = initialState, action: CreateUserAction) => {
+const reducer = (state = initialState, action: IUserLoginAction) => {
     switch (action.type) {
-        case CREATE_USER_SUCCESS:
+        case USER_LOGIN_SUCCESS:
             return {
                 ...state,
                 ...action.payload,

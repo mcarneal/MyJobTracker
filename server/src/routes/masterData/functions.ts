@@ -8,6 +8,7 @@ const SUCCESS = 200
 
 const fetchAllNavigationBarItems = async (req: Request, res: Response) => {
     try {
+        console.log(req)
         let count: number = 0;
         queryTimer.processStarted()
         const allNavigationBarItems = await MasterDataDataBaseController.fetchAllNavigationBarItems()

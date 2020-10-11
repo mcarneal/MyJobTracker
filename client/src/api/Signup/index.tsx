@@ -1,4 +1,5 @@
 import axios from "axios"
+import { ICreateUser } from "./types"
 
 class SignupUserController {
     private static baseUrl= process.env.REACT_APP_BASE_URL
@@ -6,7 +7,7 @@ class SignupUserController {
     public static async createUser({
         email,
         password,
-    }: any) {
+    }: ICreateUser) {
         return (await axios.post(`${this.baseUrl}/users`, {
             displayName: email,
             password,

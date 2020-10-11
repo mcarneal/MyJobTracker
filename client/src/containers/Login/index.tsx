@@ -5,19 +5,48 @@ import { formValueSelector, Field, reduxForm, InjectedFormProps } from 'redux-fo
 import TextFieldInput from "../../components/TextField";
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from "connected-react-router";
 import { LoginProps } from "./types";
+import {Container, Paper, Avatar, Grid, CssBaseline, Typography, Button, Link, Box} from "@material-ui/core";
+import GoogleButton from 'react-google-button'
+import {useInjectReducer} from "../../utils/injectReducer";
+import reducer from "./reducers";
+import { submitUserLogin} from "./actions";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             '& > *': {
                 margin: theme.spacing(1),
-                width: '25ch',
+                width: '100%',
             },
         },
+        paper: {
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        avatar: {
+            margin: theme.spacing(1),
+            backgroundColor: theme.palette.secondary.main,
+        },
+        form: {
+            width: '100%', // Fix IE 11 issue.
+            marginTop: theme.spacing(1),
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2),
+        },
+        box: {
+            margin: theme.spacing(8,0,2),
+            alignItems: 'center',
+            justifyContent: "center",
+            display: 'flex',
+        }
     }),
 );
+
+
 
 const Login: FunctionComponent<LoginProps & InjectedFormProps<{}, LoginProps>> = ({
     handleSubmit,
@@ -25,50 +54,86 @@ const Login: FunctionComponent<LoginProps & InjectedFormProps<{}, LoginProps>> =
     password,
 
 }) => {
+    useInjectReducer ({
+        key: "user",
+        reducer,
+    })
     const classes = useStyles();
     const dispatch = useDispatch()
-    const handleSignup = () => {
-        dispatch(push(`/signup`))
-    }
-    const submit = (e: any) => {
-        console.log(e)
-        console.log(email, password)
+    const submit = () => {
+        dispatch(submitUserLogin({
+            email,
+            password,
+        }))
     }
     return(
-        <div>
-        <form
-            className={classes.root}
-            onSubmit={handleSubmit(submit)}
-        >
-            <div>
-                <Field
-                    name="email"
-                    id="outlined-basic"
-                    placeholder="Email Address"
-                    variant="outlined"
-                    component={TextFieldInput}
-                />
-            </div>
-            <div>
-                <Field
-                    name="password"
-                    id="standard-password-input"
-                    placeholder="Password"
-                    type="password"
-                    variant="outlined"
-                    component={TextFieldInput}
-                />
-            </div>
-            <div>
-                <button type="submit">
-                    Submit
-                </button>
-                <button onClick={handleSignup}>
-                    Signup
-                </button>
-            </div>
-        </form>
-            </div>
+        <Container component="main" maxWidth="xs" >
+            <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+
+                    </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                    <form
+                        className={classes.form}
+                        onSubmit={handleSubmit(submit)}
+                    >
+                        <div>
+                            <Field
+                                name="email"
+                                id="outlined-basic"
+                                placeholder="Email Address"
+                                variant="outlined"
+                                component={TextFieldInput}
+                            />
+                        </div>
+                        <div>
+                            <Field
+                                name="password"
+                                id="standard-password-input"
+                                placeholder="Password"
+                                type="password"
+                                variant="outlined"
+                                component={TextFieldInput}
+                            />
+                        </div>
+                        <div>
+                            <Button
+                                type="submit"
+                                color="primary"
+                                fullWidth
+                                variant="contained"
+                                className={classes.submit}
+                            >
+                                Submit
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="http://localhost:3000/signup" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </form>
+                    <Box className={classes.box}
+                     justifyContent="center"
+                    >
+                        <a href="http://localhost:8808/api/auth/google">
+                             <GoogleButton
+                                type="light"
+                            />
+                        </a>
+                    </Box>
+                </div>
+        </Container>
     )
 }
 

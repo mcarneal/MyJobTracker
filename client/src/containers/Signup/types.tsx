@@ -1,6 +1,7 @@
 export interface CreateUser {
     isLoading: boolean,
     email: string | undefined,
+    isAuthenticated: boolean;
 }
 
 export interface CreateUserAction {

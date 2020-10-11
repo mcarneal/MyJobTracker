@@ -20,7 +20,11 @@ const handleLocalAuthentication = async (req: Request, res: Response, next: Next
                 if (err) {
                     return next(err);
                 }
-                return res.status(201).json(user);
+                return res.status(201).json({
+                    result: {
+                        data: user,
+                    }
+                });
             });
         })(req, res, next);
 }

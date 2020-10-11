@@ -29,7 +29,11 @@ const handleLocalAuthentication = (req, res, next) => __awaiter(void 0, void 0, 
             if (err) {
                 return next(err);
             }
-            return res.status(201).json(user);
+            return res.status(201).json({
+                result: {
+                    data: user,
+                }
+            });
         });
     })(req, res, next);
 });
