@@ -1,0 +1,2 @@
+export const AUTO_LOGIN_SUCCESS = `app/App/AUTO_LOGIN_SUCCESS`
+export const AUTO_LOGIN_FAILURE = `app/App/AUTO_LOGIN_FAILURE`

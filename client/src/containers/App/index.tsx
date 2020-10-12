@@ -1,7 +1,9 @@
 import React, {FunctionComponent, lazy, Suspense} from 'react';
 import { Route, Switch } from "react-router";
 import Login from '../Login'
-import ResponsiveDrawer from "../../components/ResponsiveDrawer";
+import ResponsiveDrawer from "../ResponsiveDrawer";
+import InitiateAutoLogin from "./hooks";
+import ProtectedRoute from "../ProtectedRoute";
 
 const Signup = lazy(async ()=> {
     return  await import(`../Signup`)
@@ -11,7 +13,7 @@ const Home = lazy(async ()=> {
 })
 
 const App = () =>  {
-    console.log(`iam inside the app component`)
+    InitiateAutoLogin()
     return (
      <div>
          <Suspense fallback={<div>Loading</div>}>
@@ -19,7 +21,7 @@ const App = () =>  {
                  <Route exact path="/" component={Login} />
                  <Route exact path="/signup" component={Signup} />
                  <ResponsiveDrawer>
-                     <Route exact path="/home" component={Home} />
+                     <ProtectedRoute path='/home' component={Home} />
                  </ResponsiveDrawer>
                  {/*<Route component={NotFoundPage} />*/}
              </Switch>

@@ -21,7 +21,7 @@ import {FetchFromApi, useStyles } from "./hooks"
 import * as selectors  from "./selectors"
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import ListItems from "../ListItem"
+import ListItems from "../../components/ListItem"
 
 const ResponsiveDrawer = ({
     children,
