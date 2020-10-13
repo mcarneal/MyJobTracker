@@ -5,16 +5,23 @@ import {
 import {
     IUserProps,
 } from "./types";
+import LoginController from "../../api/Login";
 
 export const initiateAutoLogin = () => {
     return async (dispatch: any)  => {
         try {
-            //todo: add api call right here
+            console.log(`i was logged?`)
+            const {
+                isAuthenticated,
+                user: {
+                    displayName : email,
+                },
+            } = await LoginController.autoLogin()
             dispatch(autoLoginSuccess({
                 autoLoginAttempted: true,
-                isAuthenticated: true,
+                isAuthenticated,
                 isLoading: false,
-                email: `michael`,
+                email,
             }))
         } catch (e) {
             dispatch(autoLoginFailure({

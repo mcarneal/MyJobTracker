@@ -15,6 +15,13 @@ class LoginController {
             withCredentials: true,
         })).data.result.data
     }
+
+    public static async autoLogin(){
+        return (await axios.post(`${this.baseUrl}/auth/auto-login`, {}, {
+            withCredentials: true,
+            }
+        )).data.result.data
+    }
 }
 
 export default LoginController

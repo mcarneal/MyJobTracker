@@ -10,13 +10,14 @@ import * as selectors from "./selectors";
 import {
     SelectorType,
     IProtectedRoute,
-    IWithConnectProps,
 } from "./types"
 
 
 
 const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted ,isAuthenticated, component: Component, ...rest}) => {
     const dispatch = useDispatch()
+    console.log(`is auth:`, isAuthenticated)
+    console.log(`is attempted:`, autoLoginAttempted)
     useInjectReducer ({
         key: "user",
         reducer,
@@ -32,7 +33,7 @@ const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted 
                 ? <Component {...props} />
                 : <Redirect to="/" />
         )} />
-        : <h1>loading</h1>
+        : <h1>butt nugget</h1>
         )
 
 }
