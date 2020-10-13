@@ -42,7 +42,7 @@ const mapStateToProps = createStructuredSelector<any, SelectorType>({
     autoLoginAttempted: selectors.makeAutoLoginAttempted()
 });
 
-const withConnect = connect<{}, {}, IWithConnectProps>(
+const withConnect = connect<{}, {}, any>(
     mapStateToProps,
 )
 

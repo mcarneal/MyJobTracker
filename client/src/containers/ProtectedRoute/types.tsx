@@ -1,5 +1,6 @@
 import selectUserDomain from "./selectors";
 import { RouteProps } from "react-router";
+import {LazyExoticComponent} from "react";
 
 export interface IProtectedRoute extends RouteProps {
     autoLoginAttempted: boolean;
