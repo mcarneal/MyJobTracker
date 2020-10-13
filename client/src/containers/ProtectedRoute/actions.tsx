@@ -10,7 +10,6 @@ import LoginController from "../../api/Login";
 export const initiateAutoLogin = () => {
     return async (dispatch: any)  => {
         try {
-            console.log(`i was logged?`)
             const {
                 isAuthenticated,
                 user: {
@@ -34,6 +33,29 @@ export const initiateAutoLogin = () => {
     };
 };
 
+export const initiateLogout = () => {
+    return async (dispatch: any) => {
+        try {
+            const {
+                loggedOut,
+            } = await LoginController.logout()
+            if (loggedOut) dispatch(logoutSuccess({
+                autoLoginAttempted: false,
+                isAuthenticated: false,
+                isLoading: true,
+                email: undefined,
+            }))
+
+        } catch (e) {
+            console.log(`dispatch failed`)
+        }
+    }
+}
+
+export const logoutSuccess = (payload: any) => ({
+    type: `LOGOUT_SUCCESS`,
+    payload,
+})
 
 export const autoLoginSuccess = (payload: IUserProps) => ({
     type: AUTO_LOGIN_SUCCESS,

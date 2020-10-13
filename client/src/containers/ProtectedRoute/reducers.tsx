@@ -27,6 +27,12 @@ const reducer = (state = initialState, action: IAutoLoginAction) => {
                 ...state,
                 ...action.payload
             }
+        case `LOGOUT_SUCCESS`:
+            console.log(`was i reduced`)
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state
     }

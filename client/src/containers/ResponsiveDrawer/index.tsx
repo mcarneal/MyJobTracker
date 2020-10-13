@@ -16,12 +16,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 import { ResponsiveDrawerProps, SelectorType } from "./types"
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {FetchFromApi, useStyles } from "./hooks"
 import * as selectors  from "./selectors"
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import ListItems from "../../components/ListItem"
+import {Button} from "@material-ui/core";
+import { initiateLogout } from "../ProtectedRoute/actions";
 
 const ResponsiveDrawer = ({
     children,
@@ -33,10 +35,15 @@ const ResponsiveDrawer = ({
     FetchFromApi({
         isFetching
     })
+    const dispatch = useDispatch()
     const classes = useStyles();
     const theme = useTheme();
 
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const handleLogout = () => {
+        dispatch(initiateLogout())
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -83,6 +90,14 @@ const ResponsiveDrawer = ({
                     <Typography variant="h6" noWrap>
                         Responsive drawer
                     </Typography>
+                        <Button
+                            onClick={handleLogout}
+                            color="secondary"
+                            variant="contained"
+                            className={classes.submit}
+                        >
+                            Logout
+                        </Button>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">

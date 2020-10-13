@@ -22,6 +22,13 @@ class LoginController {
             }
         )).data.result.data
     }
+
+    public static async logout() {
+        return (await axios.post(`${this.baseUrl}/auth/logout`, {}, {
+                withCredentials: true,
+            }
+        )).data.result.data
+    }
 }
 
 export default LoginController

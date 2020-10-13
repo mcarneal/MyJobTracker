@@ -2,7 +2,6 @@ import React, {FunctionComponent, lazy, Suspense} from 'react';
 import { Route, Switch } from "react-router";
 import Login from '../Login'
 import ResponsiveDrawer from "../ResponsiveDrawer";
-import InitiateAutoLogin from "./hooks";
 import ProtectedRoute from "../ProtectedRoute";
 
 const Signup = lazy(async ()=> {
@@ -13,7 +12,6 @@ const Home = lazy(async ()=> {
 })
 
 const App = () =>  {
-    InitiateAutoLogin()
     return (
      <div>
          <Suspense fallback={<div>Loading</div>}>

@@ -16,8 +16,6 @@ import {
 
 const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted ,isAuthenticated, component: Component, ...rest}) => {
     const dispatch = useDispatch()
-    console.log(`is auth:`, isAuthenticated)
-    console.log(`is attempted:`, autoLoginAttempted)
     useInjectReducer ({
         key: "user",
         reducer,
@@ -30,7 +28,8 @@ const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted 
     return (
         autoLoginAttempted && Component ? <Route {...rest} render={(props: any) => (
             isAuthenticated
-                ? <Component {...props} />
+                ?
+                <Component {...props} />
                 : <Redirect to="/" />
         )} />
         : <h1>butt nugget</h1>
