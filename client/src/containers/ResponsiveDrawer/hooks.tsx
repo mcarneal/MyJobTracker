@@ -30,6 +30,10 @@ export const useStyles = makeStyles((theme: Theme) =>
         root: {
             display: 'flex',
         },
+        account: {
+          position: 'relative',
+          marginLeft: 'auto',
+        },
         drawer: {
             [theme.breakpoints.up('sm')]: {
                 width: drawerWidth,
@@ -38,8 +42,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         appBar: {
             [theme.breakpoints.up('sm')]: {
-                width: `calc(100% - ${drawerWidth}px)`,
-                marginLeft: drawerWidth,
+                // width: `calc(100% - ${drawerWidth}px)`,
+                // marginLeft: drawerWidth,
+                zIndex: theme.zIndex.drawer + 1,
             },
         },
         menuButton: {
@@ -62,6 +67,21 @@ export const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('md')]: {
                 marginLeft: theme.spacing(5),
             },
+        },
+        large: {
+            width: theme.spacing(9),
+            height: theme.spacing(9),
+            marginLeft: 70,
+            display: "flex",
+            alignItems: 'center'
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            color: theme.palette.text.primary,
+        },
+        menuItem: {
+            width: 200,
         }
     }),
 );

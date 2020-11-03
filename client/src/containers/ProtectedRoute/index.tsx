@@ -7,12 +7,11 @@ import {useInjectReducer} from '../../utils/injectReducer';
 import { initiateAutoLogin } from "./actions";
 import reducer from "./reducers";
 import * as selectors from "./selectors";
+import ProgressBar from "../../components/ProgressBar";
 import {
     SelectorType,
     IProtectedRoute,
 } from "./types"
-
-
 
 const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted ,isAuthenticated, component: Component, ...rest}) => {
     const dispatch = useDispatch()
@@ -30,16 +29,16 @@ const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({autoLoginAttempted 
             isAuthenticated
                 ?
                 <Component {...props} />
-                : <Redirect to="/" />
+                : <Redirect to="/login" />
         )} />
-        : <h1>butt nugget</h1>
+        : <ProgressBar />
         )
 
 }
 
 const mapStateToProps = createStructuredSelector<any, SelectorType>({
     isAuthenticated: selectors.makeIsAuthenticated(),
-    autoLoginAttempted: selectors.makeAutoLoginAttempted()
+    autoLoginAttempted: selectors.makeAutoLoginAttempted(),
 });
 
 const withConnect = connect<{}, {}, any>(

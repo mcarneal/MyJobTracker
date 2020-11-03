@@ -13,6 +13,7 @@ export const initialState: IUserProps = {
     isAuthenticated: false,
     isLoading: true,
     email: undefined,
+    profilePicture: undefined,
 }
 
 const reducer = (state = initialState, action: IAutoLoginAction) => {
@@ -28,7 +29,6 @@ const reducer = (state = initialState, action: IAutoLoginAction) => {
                 ...action.payload
             }
         case `LOGOUT_SUCCESS`:
-            console.log(`was i reduced`)
             return {
                 ...state,
                 ...action.payload

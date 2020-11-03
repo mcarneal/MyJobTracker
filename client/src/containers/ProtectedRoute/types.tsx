@@ -5,6 +5,9 @@ import {LazyExoticComponent} from "react";
 export interface IProtectedRoute extends RouteProps {
     autoLoginAttempted: boolean;
     isAuthenticated: boolean;
+    email?: string | undefined;
+    profilePicture?: string | undefined;
+    user?: any;
 }
 
 export interface IWithConnectProps {
@@ -17,9 +20,11 @@ export interface IUserProps {
     isAuthenticated: boolean;
     isLoading?: boolean;
     email?: undefined | string,
+    profilePicture?: undefined | string;
+    user?: any;
 }
 export interface IUser {
-    user: IUserProps;
+    user?: IUserProps;
 }
 
 export interface IAutoLoginAction {

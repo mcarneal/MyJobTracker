@@ -20,6 +20,7 @@ const TextFieldInput = ({
             fullWidth
             {...input}
             {...custom}
+            label={placeholder}
         />
     )
 }

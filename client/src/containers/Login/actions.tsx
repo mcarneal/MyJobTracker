@@ -7,6 +7,8 @@ import {
 } from "./types";
 import { push } from "connected-react-router";
 import LoginController from "../../api/Login";
+import {reset} from 'redux-form';
+
 
 
 export const submitUserLogin = ({
@@ -24,7 +26,8 @@ export const submitUserLogin = ({
                 email,
                 isAuthenticated: true,
             }))
-            dispatch(push(`/home`))
+            dispatch(reset('LoginForm'))
+            dispatch(push(`/`))
         } catch (e) {
             console.log(`Error occurred creating user: ${e}`)
         }

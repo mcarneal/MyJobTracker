@@ -5,7 +5,9 @@ export interface ResponsiveDrawerProps {
     children?: React.ReactNode;
     window?: () => Window;
     items?: [] | undefined;
-    isFetching?: boolean
+    isFetching?: boolean;
+    isAuthenticated?: boolean | undefined;
+    user?: any;
 }
 
 export interface Item {

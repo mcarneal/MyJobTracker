@@ -39,6 +39,10 @@ const schema = {
         type: String,
         required: false,
     },
+    profilePicture: {
+        type: String,
+        required: false,
+    },
     salt: {
         type: Buffer,
         required: false

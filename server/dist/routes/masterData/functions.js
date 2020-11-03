@@ -19,7 +19,6 @@ const masterData_1 = __importDefault(require("../../lib/mongoose/masterData"));
 const SUCCESS = 200;
 const fetchAllNavigationBarItems = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req);
         let count = 0;
         queryTimer_1.default.processStarted();
         const allNavigationBarItems = yield masterData_1.default.fetchAllNavigationBarItems();

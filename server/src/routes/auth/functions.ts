@@ -3,10 +3,13 @@ import passport from "../../lib/passport";
 import User from "../../lib/mongoose/users/model";
 import {W} from "../../lib/winston";
 import {OAuth2Client} from "google-auth-library";
+import Boom from "boom";
+import queryTimer from "../../lib/helpers/queryTimer";
 const {
     CLIENTID,
     CLIENTSECERT,
 } = process.env
+const SUCCESS = 200
 
 const handleLocalAuthentication = async (req: Request, res: Response, next: NextFunction ) =>{
         passport.authenticate("local", function(err: any, user: Express.User, info: { message: any; }) {
@@ -64,7 +67,53 @@ const handleGoogleRefreshToken = async (req: Request, res: Response) => {
     }
 }
 
+const autoLogin = async (req: Request, res: Response) => {
+    try {
+        console.log(`this is the user req`,req.user)
+        queryTimer.processStarted()
+        const isAuthenticated = req.isAuthenticated()
+        let user;
+        if (req.user) user = req.user
+        res.status(SUCCESS).json({
+            result: {
+                queryTime: queryTimer.processFinished(),
+                data: {
+                    isAuthenticated,
+                    user,
+                }
+            }
+        })
+    } catch (e) {
+        W.error(e.message)
+        res.status(e.status).json({
+            result: Boom.badImplementation(e)
+        })
+    }
+}
+
+const logout = async (req: Request, res: Response) => {
+    try {
+        queryTimer.processStarted()
+        req.logout();
+        res.status(SUCCESS).json({
+            result: {
+                queryTime: queryTimer.processFinished(),
+                data: {
+                    loggedOut: true,
+                }
+            }
+        })
+    } catch (e) {
+        W.error(e.message)
+        res.status(e.status).json({
+            result: Boom.badImplementation(e)
+        })
+    }
+}
+
 export default {
+    autoLogin,
+    logout,
     handleGoogleRefreshToken,
     handleLocalAuthentication,
 }

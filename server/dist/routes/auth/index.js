@@ -11,14 +11,10 @@ module.exports = (api) => {
         accessType: 'offline',
     }));
     api.get("/auth/google/redirect", passport_1.default.authenticate("google"), (req, res) => {
-        res.redirect("http://localhost:3000/home");
+        res.redirect("http://localhost:3000/");
     });
     api.get("/auth/refresh", functions_1.default.handleGoogleRefreshToken);
     api.post("/auth/login", functions_1.default.handleLocalAuthentication);
-    api.get("/logout", function (req, res) {
-        req.logout();
-        res.status(200).json({
-            loggedOut: true
-        });
-    });
+    api.post("/auth/logout", functions_1.default.logout);
+    api.post(`/auth/auto-login`, functions_1.default.autoLogin);
 };

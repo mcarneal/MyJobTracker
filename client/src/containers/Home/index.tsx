@@ -3,12 +3,13 @@ import { connect, useSelector } from "react-redux";
 import {createStructuredSelector} from "reselect";
 import * as selectors from "./selectors";
 import {compose} from "redux";
+import ProgressBar from "../../components/ProgressBar";
 
 const Home = (props: any) => {
-    const selector = useSelector(state => state)
-    console.log(`this is the selector`, selector)
     return(
-        <button onClick={()=> console.log(props)}>click me </button>
+        <div>
+            <ProgressBar />
+        </div>
     )
 }
 

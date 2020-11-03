@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializeGoogleConfig = exports.config = void 0;
 const model_1 = __importDefault(require("../../mongoose/users/model"));
 const winston_1 = require("../../winston");
+const PROFILE_PICTURE_URL = 0;
 const { CLIENTID, CLIENTSECERT, } = process.env;
 exports.config = {
     clientID: CLIENTID,
@@ -23,14 +24,17 @@ exports.config = {
 };
 exports.initializeGoogleConfig = (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(`this is the profile:`, profile);
         let currentUser;
         currentUser = yield model_1.default.findOne({
             googleId: profile.id,
         });
+        const profilePicture = profile.photos[PROFILE_PICTURE_URL].value;
         if (currentUser) {
             yield currentUser.updateOne({
                 accessToken,
                 refreshToken,
+                profilePicture,
             });
             yield currentUser.save();
             done(null, currentUser);
@@ -41,6 +45,7 @@ exports.initializeGoogleConfig = (accessToken, refreshToken, profile, done) => _
                 displayName: profile.displayName,
                 accessToken,
                 refreshToken,
+                profilePicture,
             });
             currentUser.save();
             done(null, currentUser);

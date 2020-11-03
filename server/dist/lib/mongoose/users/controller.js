@@ -16,12 +16,13 @@ const model_1 = __importDefault(require("./model"));
 const winston_1 = require("../../winston");
 const customErrors_1 = __importDefault(require("../../customErrors"));
 class UserController {
-    static createUser({ displayName, password, }) {
+    static createUser({ displayName, password, profilePicture = null, }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield model_1.default.create({
                     displayName,
                     password,
+                    profilePicture,
                 });
                 yield user.save();
                 return [user];

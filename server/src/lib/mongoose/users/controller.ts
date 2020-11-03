@@ -13,11 +13,13 @@ class UserController {
     public static async createUser({
         displayName,
         password,
+        profilePicture = null,
     }: ICreateUser) {
         try {
             const user =  await User.create({
                 displayName,
                 password,
+                profilePicture,
             })
             await user.save()
             return [user]

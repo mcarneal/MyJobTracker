@@ -14,6 +14,7 @@ export const initiateAutoLogin = () => {
                 isAuthenticated,
                 user: {
                     displayName : email,
+                    profilePicture,
                 },
             } = await LoginController.autoLogin()
             dispatch(autoLoginSuccess({
@@ -21,6 +22,7 @@ export const initiateAutoLogin = () => {
                 isAuthenticated,
                 isLoading: false,
                 email,
+                profilePicture,
             }))
         } catch (e) {
             dispatch(autoLoginFailure({

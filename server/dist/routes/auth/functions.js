@@ -16,7 +16,10 @@ const passport_1 = __importDefault(require("../../lib/passport"));
 const model_1 = __importDefault(require("../../lib/mongoose/users/model"));
 const winston_1 = require("../../lib/winston");
 const google_auth_library_1 = require("google-auth-library");
+const boom_1 = __importDefault(require("boom"));
+const queryTimer_1 = __importDefault(require("../../lib/helpers/queryTimer"));
 const { CLIENTID, CLIENTSECERT, } = process.env;
+const SUCCESS = 200;
 const handleLocalAuthentication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     passport_1.default.authenticate("local", function (err, user, info) {
         if (err) {
@@ -69,7 +72,54 @@ const handleGoogleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0,
         winston_1.W.error(`Error occurred from auth refresh ${e}`);
     }
 });
+const autoLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log(`this is the user req`, req.user);
+        queryTimer_1.default.processStarted();
+        const isAuthenticated = req.isAuthenticated();
+        let user;
+        if (req.user)
+            user = req.user;
+        res.status(SUCCESS).json({
+            result: {
+                queryTime: queryTimer_1.default.processFinished(),
+                data: {
+                    isAuthenticated,
+                    user,
+                }
+            }
+        });
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(e.status).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        queryTimer_1.default.processStarted();
+        req.logout();
+        res.status(SUCCESS).json({
+            result: {
+                queryTime: queryTimer_1.default.processFinished(),
+                data: {
+                    loggedOut: true,
+                }
+            }
+        });
+    }
+    catch (e) {
+        winston_1.W.error(e.message);
+        res.status(e.status).json({
+            result: boom_1.default.badImplementation(e)
+        });
+    }
+});
 exports.default = {
+    autoLogin,
+    logout,
     handleGoogleRefreshToken,
     handleLocalAuthentication,
 };

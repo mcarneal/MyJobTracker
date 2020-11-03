@@ -1,5 +1,6 @@
 import User from "../../mongoose/users/model";
 import { W } from "../../winston";
+const PROFILE_PICTURE_URL = 0
 const {
     CLIENTID,
     CLIENTSECERT,
@@ -13,14 +14,17 @@ export const config = {
 
 export const initializeGoogleConfig = async (accessToken: string, refreshToken: any, profile: any, done: any) => {
     try {
+        console.log(`this is the profile:`, profile)
         let currentUser
         currentUser = await User.findOne({
             googleId: profile.id,
         })
+        const profilePicture = profile.photos[PROFILE_PICTURE_URL].value
         if (currentUser) {
             await currentUser.updateOne({
                 accessToken,
                 refreshToken,
+                profilePicture,
             })
             await currentUser.save()
             done(null, currentUser)
@@ -30,6 +34,7 @@ export const initializeGoogleConfig = async (accessToken: string, refreshToken: 
                 displayName: profile.displayName,
                 accessToken,
                 refreshToken,
+                profilePicture,
             })
             currentUser.save()
             done(null, currentUser)

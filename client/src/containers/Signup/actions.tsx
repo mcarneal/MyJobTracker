@@ -23,7 +23,7 @@ export const submitCreateUser = ({
                  email,
                  isAuthenticated: true,
             }))
-             dispatch(push(`/home`))
+             dispatch(push(`/`))
         } catch (e) {
             console.log(`Error occurred creating user: ${e}`)
         }
