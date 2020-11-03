@@ -29,10 +29,7 @@ const reducer = (state = initialState, action: IAutoLoginAction) => {
                 ...action.payload
             }
         case `LOGOUT_SUCCESS`:
-            return {
-                ...state,
-                ...action.payload
-            }
+            return initialState
         default:
             return state
     }
